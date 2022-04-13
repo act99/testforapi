@@ -1,20 +1,20 @@
 import axios from "axios";
+import { getCookie } from "./Cookie";
 
-const tokenCheck = document.cookie;
-const token = tokenCheck.split("=")[1];
+const token = getCookie("token");
 const api = axios.create({
   // 실제 베이스 유알엘
-  baseURL: "http://54.180.93.95:8080",
+  baseURL: "http://52.79.228.83:8080",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
-    token: token,
+    Authorization: token,
   },
 });
 
 api.interceptors.request.use(function (config) {
   const accessToken = document.cookie.split("=")[1];
-  config.headers.common["authorization"] = `${accessToken}`;
+  config.headers.common["Authorization"] = `${accessToken}`;
   return config;
 });
 
@@ -25,10 +25,20 @@ export const apis = {
       username: id,
       nickname: nickname,
       password: pwd,
-      passwordcheck: passwordcheck,
     }),
   userInfo: (token) =>
     api.post(`/user/userinfo`, {
       authorization: token,
     }),
+  add: (contents) => api.post("/api/posts", contents),
+  get: () => api.get("/api/posts"),
+  edit: (postID, contents) => api.put(`/api/posts/${postID}`, contents),
+  delete: (postID) => api.delete(`/api/posts/${postID}`),
+  imageUpload: (image) => api.post(`/api/image`, image),
+  buyCount: (postId) => api.post(`/api/posts/${postId}/buycount`),
+  // comment
+  addComment: (postId, comment) =>
+    api.post(`/api/${postId}/comments`, { comment: comment }),
+  getComments: (postId) => api.get(`/api/${postId}/comments`),
+  delComment: (commentId) => api.delete(`/api/comments/${commentId}`),
 };

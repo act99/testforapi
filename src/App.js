@@ -9,12 +9,16 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { actionCreators as loginActions } from "./redux/modules/loginReducer";
 import { useDispatch } from "react-redux";
+import { getCookie } from "./shared/Cookie";
 
+const token = getCookie("token");
 function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
-    // if (document.cookie) dispatch(loginActions.loginCheckDB());
-  }, []);
+    if (token) {
+      dispatch(loginActions.loginCheckDB());
+    }
+  }, [dispatch]);
 
   return (
     <>

@@ -22,15 +22,18 @@ export default function Signup() {
       alert("비밀번호가 공란입니다.");
     } else if (data.get("nickname") === "") {
       alert("닉네임이 공란입니다.");
-    } else if (data.get("password") !== data.get("checkPassword")) {
-      alert("비밀번호가 일치하지 않습니다.");
-    } else {
+    }
+    // else if (data.get("password") !== data.get("checkPassword"))
+    // {
+    //   alert("비밀번호가 일치하지 않습니다.");
+    // }
+    else {
       dispatch(
         userActions.SignUpDB(
           data.get("email"),
           data.get("nickname"),
-          data.get("password"),
-          data.get("checkPassword")
+          data.get("password")
+          // data.get("checkPassword")
         )
       );
     }
@@ -38,7 +41,6 @@ export default function Signup() {
 
   return (
     <Grid container component="main" sx={{ height: "92vh", margin: "0.7vh" }}>
-      <CssBaseline />
       <Grid
         item
         xs={false}
@@ -113,7 +115,7 @@ export default function Signup() {
               id="password"
               autoComplete="current-password"
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -122,7 +124,7 @@ export default function Signup() {
               type="password"
               id="checkPassword"
               autoComplete="current-password"
-            />
+            /> */}
 
             <Button
               type="submit"

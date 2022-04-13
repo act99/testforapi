@@ -90,16 +90,16 @@ const logOutDB = () => {
   };
 };
 
-const SignUpDB = (id, nickname, pwd, passwordcheck) => {
+const SignUpDB = (id, nickname, pwd) => {
   return function (dispatch, getState, { history }) {
     apis
-      .signup(id, nickname, pwd, passwordcheck)
+      .signup(id, nickname, pwd)
       .then((res) => {
         alert("회원가입이 완료되었습니다.");
         history.push("/signin");
       })
       .catch((error) => {
-        alert("회원가입에 실패했습니다.");
+        console.log(error);
       });
   };
 };
